@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ansible Playbook Generator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        label {
+            font-weight: bold;
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Ansible Playbook Generator</h1>
+        <form action="/generate" method="post">
+            <label for="task">Task:</label>
+            <input type="text" id="task" name="task" placeholder="Enter task">
+            <label for="variable">Dynamic Variable:</label>
+            <input type="text" id="variable" name="variable" placeholder="Enter dynamic variable">
+            <button type="button" onclick="addTask()">Add Task</button>
+            <button type="submit">Generate Playbook</button>
+        </form>
+    </div>
+
+    <script>
+        function addTask() {
+            var taskInput = document.createElement("input");
+            taskInput.type = "text";
+            taskInput.name = "task";
+            taskInput.placeholder = "Enter task";
+            document.querySelector("form").appendChild(document.createElement("br"));
+            document.querySelector("form").appendChild(taskInput);
+
+            var variableInput = document.createElement("input");
+            variableInput.type = "text";
+            variableInput.name = "variable";
+            variableInput.placeholder = "Enter dynamic variable";
+            document.querySelector("form").appendChild(document.createElement("br"));
+            document.querySelector("form").appendChild(variableInput);
+        }
+    </script>
+</body>
+</html>
