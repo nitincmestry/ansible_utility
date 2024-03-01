@@ -1,0 +1,43 @@
+- hosts: localhost
+  name: Take artifact backup
+  tasks:
+  - action:
+      args:
+        mode: 755
+        path: /path/to/backup
+        state: directory
+      module: ansible.builtin.file
+- hosts: localhost
+  name: Prepare environment
+  tasks:
+  - action:
+      args:
+        mode: 755
+        path: /tmp
+        state: directory
+      module: ansible.builtin.file
+- hosts: localhost
+  name: Download artifact from artifactory and untar
+  tasks:
+  - action:
+      args:
+        dest: /tmp/artifact.tar.gz
+        mode: 755
+        url: http://your_artifactory_url/artifact.tar.gz
+      module: ansible.builtin.get_url
+  - action:
+      args:
+        dest: /tmp/
+        extra_opts: --strip-components=1
+        remote_src: true
+        src: /tmp/artifact.tar.gz
+      module: ansible.builtin.unarchive
+- hosts: localhost
+  name: Change permissions
+  tasks:
+  - action:
+      args:
+        mode: 755
+        path: /tmp/artifact
+        recurse: true
+      module: ansible.builtin.file

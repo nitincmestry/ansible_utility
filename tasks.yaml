@@ -1,0 +1,77 @@
+# tasks.yaml
+
+- name: Take artifact backup
+  tasks:
+    - name: Create backup directory
+      module: ansible.builtin.file
+      task_params:
+        path:
+          default: "/path/to/backup"
+          description: "Path for backup directory"
+        state:
+          default: "directory"
+          description: "Desired state of the directory"
+        mode:
+          default: 755
+          description: "Permissions for the directory"
+
+- name: Prepare environment
+  tasks:
+    - name: Create /tmp directory
+      module: ansible.builtin.file
+      task_params:
+        path:
+          default: "/tmp"
+          description: "Path for /tmp directory"
+        state:
+          default: "directory"
+          description: "Desired state of the directory"
+        mode:
+          default: 755
+          description: "Permissions for the directory"
+
+- name: Download artifact from artifactory and untar
+  tasks:
+    - name: Download artifact from artifactory
+      module: ansible.builtin.get_url
+      task_params:
+        url:
+          default: "http://your_artifactory_url/artifact.tar.gz"
+          description: "URL of the artifact"
+        dest:
+          default: "/tmp/artifact.tar.gz"
+          description: "Destination path for the artifact"
+        mode:
+          default: 755
+          description: "Permissions for the artifact"
+
+    - name: Untar artifact
+      module: ansible.builtin.unarchive
+      task_params:
+        src:
+          default: "/tmp/artifact.tar.gz"
+          description: "Source path of the artifact"
+        dest:
+          default: "/tmp/"
+          description: "Destination directory for untarring"
+        remote_src:
+          default: true
+          description: "Whether the source is remote"
+        extra_opts:
+          default: "--strip-components=1"
+          description: "Extra options for untarring"
+
+- name: Change permissions
+  tasks:
+    - name: Change permissions of artifact files
+      module: ansible.builtin.file
+      task_params:
+        path:
+          default: "/tmp/artifact"
+          description: "Path to the artifact directory"
+        mode:
+          default: 755
+          description: "Permissions for the artifact directory"
+        recurse:
+          default: true
+          description: "Whether to recurse" 
